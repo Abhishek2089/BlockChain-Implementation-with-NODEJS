@@ -8,7 +8,7 @@ uuidv4();
 const app = express()
 const bitcoin = new BlockChain();
 const nodeAddress = uuidv4().split('-').join('');
-const port = process.argv[2];
+// const port = process.argv[2];
 const currentNodeUrl = process.argv[3];
 const rp = require('request-promise');
 const { json } = require('body-parser');
@@ -17,10 +17,6 @@ const { json } = require('body-parser');
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
-
-app.get('/', function(req, res) {
-    res.send('Hello world')
-})
 
 app.get('/blockchain', function(req, res) {
     res.send(bitcoin);
@@ -210,7 +206,37 @@ app.get('/consensus', function(req, res) {
     })
 });
 
+app.get('block:blockHash', function(req, res) {
+    blockHash = req.params.blockHash;
+    const correctBlock = bitcoin.getBlock(blockHash);
+    res.json({
+        block: correctBlock,
+    })
+});
 
-app.listen(port, function() {
-    console.log(`Server is running on ${port}`);
+app.get('transaction:transactionId', function(req, res) {
+    transactionId = req.params.transactionId;
+    const transactionData = bitcoin.getTransaction(transactionId);
+    res.json({
+        transaction: transactionData.transaction,
+        block: transactionData.block
+    });
+});
+
+app.get('address:address', function(req, res) {
+    const address = req.params.address;
+    const addressData = bitcoin.getAddressData(address);
+
+    res.json({
+        addressData: addressData
+    })
+});
+
+app.get('/', function(req, res) {
+    res.sendFile('./block-explorer/index.html', {root: __dirname});
+});
+
+
+app.listen(3000, function() {
+    console.log(`Server is running on 3000`);
 })

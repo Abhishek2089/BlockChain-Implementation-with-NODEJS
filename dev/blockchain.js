@@ -105,6 +105,59 @@ BlockChain.prototype.chainIsValid = function(blockchain) {
 	};
 }
 
+BlockChain.prototype.getBlock = function(blockHash) {
+	let correctBlock = null;
+	this.chain.forEach(block => {
+		if(block.hash == blockHash) {
+			correctBlock = block;
+		}
+
+		return correctBlock; 
+	});
+};
+
+BlockChain.prototype.getTransaction = function(transactionId) {
+	let correctTransaction = null;
+	let correctBlock = null;
+	this.chain.forEach(block => {
+		block.transactions.forEach(transactions => {
+			if(transactions.transactionId == transactionId) {
+				correctTransaction = transaction;
+				correctBlock = block;
+			}
+
+			return {
+				transaction: correctTransaction,
+				correctBlock: block,
+			}
+		});
+	});
+};
+
+BlockChain.prototype.getAddressData = function(address) {
+	const addressTransactions = [];
+	let balance = 0;
+	this.chain.forEach(block => {
+		block.transactions.forEach(transaction => {
+			if(transaction.sender == address || transaction.recipent == address) {
+				addressTransactions.push(transaction);
+			}
+		});
+	});
+
+	addressTransactions.forEach(transaction => {
+		if(transaction.sender == address) {
+			balance += transaction.amount;
+		} else if (transaction.recipent == address) {
+			balance -= transaction.amount;
+		}
+	});
+	return {
+		addressTransactions: addressTransactions,
+		addressbalance: balance,
+	}
+};
+
 
 // Let's test this create block method
 
