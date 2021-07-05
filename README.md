@@ -6,7 +6,7 @@ Building the blockchain class with its required functionality.
 Accessing the blockchain with express API.
 Creating a decentralized blockchain network.
 Synchronizing the entire network.
-Create Consensus.
+Create Consensus Algorithm.
 Building Block Explorer (UI tool to view blockchain data) etc..
 Running the APP locally
 
@@ -18,11 +18,10 @@ install express
 Once you have the Prerequisites covered:
 
 Clone this repository from GitHub onto your local computer.
-git clone https://github.com/AkashRajpurohit/node-blockchain.git
-Navigate into the project folder and install all of its necessary dependencies with Yarn.
+git clone https://github.com/Abhishek2089/BlockChain-Implementation-with-NODEJS.git
+Navigate into the project folder and install all of its necessary dependencies.
 cd node-blockchain
 Start the server
-npm start
 This will start the decentralized network on ports 3001 - 3006. Visit each node at these urls.
 http://localhost:3001/
 http://localhost:3002/
